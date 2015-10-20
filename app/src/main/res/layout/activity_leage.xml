@@ -27,15 +27,14 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/llHeaderBar" />
 
-    <ImageView
-        android:id="@+id/imgAdd"
-        android:layout_alignParentEnd="true"
-        android:contentDescription="@string/image.leage.text.add"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/image.leage.margin.imgadd.10dp"
+    <include
+        layout="@layout/button_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/image.leage.margin.imgadd.10dp"
+        android:contentDescription="@string/image.leage.text.add" />
 
 </RelativeLayout>
