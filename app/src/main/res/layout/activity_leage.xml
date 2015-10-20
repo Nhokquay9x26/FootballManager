@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/llHeaderBarLeage"
+        android:id="@+id/llHeaderBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/linnerlayout.leage.height.48dp"
         android:background="@color/linerlayout.leage.background.header_bar_leage"
@@ -22,13 +22,15 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleviewLeage"
+        android:id="@+id/recycleViewLeage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/llHeaderBarLeage" />
+        android:layout_below="@+id/llHeaderBar" />
 
     <ImageView
         android:id="@+id/imgAdd"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/image.leage.text.add"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/image.leage.margin.imgadd.10dp"
