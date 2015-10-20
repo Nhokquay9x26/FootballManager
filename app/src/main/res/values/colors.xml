@@ -3,6 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--file color leage-->
     <color name="linerlayout.leage.background.header_bar_leage">#0099FF</color>
     <color name="textview.leage.text.leage">#FFFFFF</color>
+
+    <!--file color splash-->
+    <color name="linerlayout.splash.background">#0099FF</color>
+    <color name="textview.splash.text.name">#FFFFFF</color>
 </resources>
