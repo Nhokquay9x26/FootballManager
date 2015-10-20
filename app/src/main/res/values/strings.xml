@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FootballManager</string>
+    <string name="textview.leage.text.leage">LEAGE</string>
 </resources>

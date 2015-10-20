@@ -3,4 +3,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="linerlayout.leage.background.header_bar_leage">#0099FF</color>
+    <color name="textview.leage.text.leage">#FFFFFF</color>
 </resources>
