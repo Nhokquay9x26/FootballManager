@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/llHeaderBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/linnerlayout.leage.height.48dp"
+        android:background="@color/linerlayout.leage.background.header_bar_leage"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvLeage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/textview.leage.text.leage"
+            android:textColor="@color/textview.leage.text.leage"
+            android:textSize="@dimen/textview.leage.size.18sp" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleViewLeage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/llHeaderBar" />
+
+    <ImageView
+        android:id="@+id/imgAdd"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/image.leage.text.add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/image.leage.margin.imgadd.10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"/>
+
+</RelativeLayout>

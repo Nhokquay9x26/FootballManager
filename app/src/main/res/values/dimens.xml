@@ -2,4 +2,9 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!--file dimen of activity_leage-->
+    <dimen name="linnerlayout.leage.height.48dp">48dp</dimen>
+    <dimen name="textview.leage.size.18sp">18sp</dimen>
+    <dimen name="image.leage.margin.imgadd.10dp">10dp</dimen>
 </resources>
