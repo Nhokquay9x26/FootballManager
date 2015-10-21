@@ -11,17 +11,17 @@ import lombok.Data;
  */
 @Data
 @Table(name = "LEAGE")
-public class LeageItem extends SugarRecord {
+public class LeagueItem extends SugarRecord {
     @Column(name = "name")
     String name;
     @Column(name = "logo")
     int logo;
 
-    public LeageItem(){
+    public LeagueItem(){
 
     }
 
-    public LeageItem(String name, int logo){
+    public LeagueItem(String name, int logo){
         this.name = name;
         this.logo = logo;
     }

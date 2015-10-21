@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/image.league.margin.10dp"
+    android:orientation="horizontal">
+
+    <vn.asiantech.internship.footballmanager.widget.CircleImageView
+        android:id="@+id/circleImageViewLeague"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_football" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/textview.league.text.name"
+        android:textSize="@dimen/textview.league.size.18sp" />
+
+</LinearLayout>

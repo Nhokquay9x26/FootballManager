@@ -5,7 +5,7 @@ import android.os.Handler;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 
-import vn.asiantech.internship.footballmanager.ui.leage.LeageActivity_;
+import vn.asiantech.internship.footballmanager.ui.league.LeagueActivity_;
 
 @EActivity(R.layout.activity_splash)
 public class SplashActivity extends Activity {
@@ -14,7 +14,7 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                    LeageActivity_.intent(SplashActivity.this).start();
+                    LeagueActivity_.intent(SplashActivity.this).start();
             }
         }, 2000);
     }

@@ -5,10 +5,11 @@
     <color name="colorAccent">#FF4081</color>
 
     <!--file color leage-->
-    <color name="linerlayout.leage.background.header_bar_leage">#0099FF</color>
-    <color name="textview.leage.text.leage">#FFFFFF</color>
+    <color name="linerlayout.league.background.header_bar_leage">#0099FF</color>
+    <color name="textview.league.text.leage">#FFFFFF</color>
 
     <!--file color splash-->
     <color name="linerlayout.splash.background">#0099FF</color>
     <color name="textview.splash.text.name">#FFFFFF</color>
+    <color name="textview.league.text.name">#0099FF</color>
 </resources>

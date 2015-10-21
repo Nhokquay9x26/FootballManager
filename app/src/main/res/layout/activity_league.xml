@@ -6,8 +6,8 @@
     <LinearLayout
         android:id="@+id/llHeaderBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/linnerlayout.leage.height.48dp"
-        android:background="@color/linerlayout.leage.background.header_bar_leage"
+        android:layout_height="@dimen/linnerlayout.league.height.48dp"
+        android:background="@color/linerlayout.league.background.header_bar_leage"
         android:orientation="horizontal">
 
         <TextView
@@ -16,8 +16,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/textview.leage.text.leage"
-            android:textColor="@color/textview.leage.text.leage"
-            android:textSize="@dimen/textview.leage.size.18sp" />
+            android:textColor="@color/textview.league.text.leage"
+            android:textSize="@dimen/textview.league.size.18sp" />
 
     </LinearLayout>
 
@@ -34,7 +34,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/image.leage.margin.imgadd.10dp"
+        android:layout_margin="@dimen/image.league.margin.imgadd.10dp"
         android:contentDescription="@string/image.leage.text.add" />
 
 </RelativeLayout>
