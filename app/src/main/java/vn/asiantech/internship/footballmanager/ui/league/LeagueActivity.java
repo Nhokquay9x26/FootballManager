@@ -24,7 +24,10 @@ import java.util.List;
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import vn.asiantech.internship.footballmanager.R;
+import vn.asiantech.internship.footballmanager.common.Utils;
 import vn.asiantech.internship.footballmanager.model.LeagueItem;
+import vn.asiantech.internship.footballmanager.ui.league.footballteam.FootBallTeamActivity;
+import vn.asiantech.internship.footballmanager.ui.league.footballteam.FootBallTeamActivity_;
 
 /**
  * Created by nhokquay9x26 on 20/10/15.
@@ -97,6 +100,7 @@ public class LeagueActivity extends Activity implements LeagueAdapter.OnItemList
 
     @Override
     public void onItemClick(int position) {
-
+        FootBallTeamActivity_.intent(LeagueActivity.this).extra(Utils.EXTRA_KEY_, mLeagues.get(position).getName()).start();
+        finish();
     }
 }

@@ -1,6 +1,5 @@
-package vn.asiantech.internship.footballmanager.ui.league;
+package vn.asiantech.internship.footballmanager.ui.league.footballteam;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,15 +9,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import vn.asiantech.internship.footballmanager.R;
-import vn.asiantech.internship.footballmanager.model.LeagueItem;
+import vn.asiantech.internship.footballmanager.model.FootBallTeamItem;
 import vn.asiantech.internship.footballmanager.widget.CircleImageView;
 
 /**
- * Created by nhokquay9x26 on 20/10/15.
+ * Created by nhokquay9x26 on 21/10/15.
  */
-public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.ViewHolder> {
+public class FootBallTeamAdapter extends RecyclerView.Adapter<FootBallTeamAdapter.ViewHolder> {
 
-    private List<LeagueItem> mLeagues;
+    private List<FootBallTeamItem> mTeams;
     private OnItemListener mOnItemListener;
 
     public OnItemListener getmOnItemListener() {
@@ -29,8 +28,8 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.ViewHolder
         this.mOnItemListener = mOnItemListener;
     }
 
-    public LeagueAdapter(List<LeagueItem> mLeagues) {
-        this.mLeagues = mLeagues;
+    public FootBallTeamAdapter(List<FootBallTeamItem> mTeams) {
+        this.mTeams = mTeams;
     }
 
     @Override
@@ -40,20 +39,20 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(LeagueAdapter.ViewHolder holder, int position) {
-        holder.tvName.setText(mLeagues.get(position).getName());
-        holder.mCircleImageViewLogo.setImageResource(mLeagues.get(position).getLogo());
+    public void onBindViewHolder(FootBallTeamAdapter.ViewHolder holder, int position) {
+        holder.mTvName.setText(mTeams.get(position).getName());
+        holder.mCircleImageView.setImageResource(mTeams.get(position).getLogo());
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView tvName;
-        private CircleImageView mCircleImageViewLogo;
 
-        public ViewHolder(View convertView) {
-            super(convertView);
-            convertView.setOnClickListener(this);
-            tvName = (TextView) convertView.findViewById(R.id.tvName);
-            mCircleImageViewLogo = (CircleImageView) convertView.findViewById(R.id.circleImageView);
+        TextView mTvName;
+        CircleImageView mCircleImageView;
+
+        public ViewHolder(View view) {
+            super(view);
+            mTvName = (TextView) view.findViewById(R.id.tvName);
+            mCircleImageView = (CircleImageView) view.findViewById(R.id.circleImageView);
         }
 
         @Override
@@ -66,14 +65,10 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        if (mLeagues != null) {
-            return mLeagues.size();
-        } else
-            return 0;
+        return mTeams.size();
     }
 
     public interface OnItemListener {
         void onItemClick(int position);
     }
-
 }

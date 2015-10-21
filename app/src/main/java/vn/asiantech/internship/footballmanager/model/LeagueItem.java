@@ -13,9 +13,9 @@ import lombok.Data;
 @Table(name = "LEAGE")
 public class LeagueItem extends SugarRecord {
     @Column(name = "name")
-    String name;
+    private String name;
     @Column(name = "logo")
-    int logo;
+    private int logo;
 
     public LeagueItem(){
 
