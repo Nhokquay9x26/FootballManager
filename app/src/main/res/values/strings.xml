@@ -2,4 +2,5 @@
     <string name="app_name">FootballManager</string>
     <string name="textview.leage.text.leage">LEAGE</string>
     <string name="image.leage.text.add">Add</string>
+    <string name="edittext.add_league.name">Name League</string>
 </resources>
