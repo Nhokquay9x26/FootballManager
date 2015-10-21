@@ -18,7 +18,6 @@ import vn.asiantech.internship.footballmanager.widget.CircleImageView;
  */
 public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.ViewHolder> {
 
-    private Context mContext;
     private List<LeagueItem> mLeagues;
     private OnItemListener mOnItemListener;
 
@@ -30,20 +29,20 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.ViewHolder
         this.mOnItemListener = mOnItemListener;
     }
 
-    public LeagueAdapter(Context context, List<LeagueItem> mLeagues) {
-        mContext = context;
+    public LeagueAdapter(List<LeagueItem> mLeagues) {
         this.mLeagues = mLeagues;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.item_list_league, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_league, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(LeagueAdapter.ViewHolder holder, int position) {
-
+        holder.tvName.setText(mLeagues.get(position).getName());
+        holder.mCircleImageViewLogo.setImageResource(mLeagues.get(position).getLogo());
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
