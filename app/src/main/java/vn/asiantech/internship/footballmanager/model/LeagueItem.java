@@ -21,7 +21,7 @@ public class LeagueItem extends SugarRecord {
 
     }
 
-    public LeagueItem(String name, int logo){
+    public LeagueItem(String name){
         this.name = name;
         this.logo = logo;
     }
