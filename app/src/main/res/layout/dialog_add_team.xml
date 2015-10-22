@@ -15,6 +15,18 @@
         android:id="@+id/edtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/edittext.add_league.name"/>
+        android:hint="@string/edittext.add_team.name"/>
+
+    <EditText
+        android:id="@+id/edtNationality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/edittext.add_team.nationality"/>
+
+    <EditText
+        android:id="@+id/edtYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/edittext.add_team.year"/>
 
 </LinearLayout>

@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/llHeaderBar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/linnerlayout.league.height.48dp"
-        android:background="@color/linerlayout.league.background.header_bar_leage"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvLeage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/textview.leage.text.leage"
-            android:textColor="@color/textview.league.text.leage"
-            android:textSize="@dimen/textview.league.size.18sp" />
-
-    </LinearLayout>
+    android:layout_height="match_parent">dat
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"

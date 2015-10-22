@@ -14,21 +14,24 @@ import lombok.Data;
 public class FootBallTeamItem extends SugarRecord {
     @Column(name = "name")
     private String name;
-    @Column(name = "description")
-    private String description;
+    @Column(name = "nationality")
+    private String nationality;
+    @Column(name = "year")
+    String year;
     @Column(name = "logo")
     private int logo;
-    @Column(name = "team")
-    private long teamId;
+    @Column(name = "leagueId")
+    private long leagueId;
 
     public FootBallTeamItem() {
 
     }
 
-    public FootBallTeamItem(String name, String description, int logo, long teamId) {
+    public FootBallTeamItem(int logo, String name, String nationality, String year, long leagueId) {
         this.name = name;
-        this.description = description;
+        this.nationality = nationality;
         this.logo = logo;
-        this.teamId = teamId;
+        this.leagueId = leagueId;
+        this.year = year;
     }
 }

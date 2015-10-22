@@ -26,14 +26,6 @@
             android:textSize="@dimen/textview.league.size.18sp" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imgBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/image.league.margin.10dp"
-        android:scaleType="center"
-        android:src="@drawable/ic_back" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
