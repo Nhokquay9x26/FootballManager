@@ -3,4 +3,7 @@
     <string name="textview.leage.text.leage">LEAGE</string>
     <string name="image.leage.text.add">Add</string>
     <string name="edittext.add_league.name">Name League</string>
+    <string name="edittext.add_team.name">Name Team</string>
+    <string name="edittext.add_team.nationality">Nationality</string>
+    <string name="edittext.add_team.year">Year</string>
 </resources>

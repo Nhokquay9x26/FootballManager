@@ -3,12 +3,21 @@ package vn.asiantech.internship.footballmanager.ui.league;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +27,7 @@ import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewsById;
 
 import java.util.List;
 
@@ -100,7 +110,10 @@ public class LeagueActivity extends Activity implements LeagueAdapter.OnItemList
 
     @Override
     public void onItemClick(int position) {
-        FootBallTeamActivity_.intent(LeagueActivity.this).extra(Utils.EXTRA_KEY_, mLeagues.get(position).getName()).start();
+        FootBallTeamActivity_.intent(LeagueActivity.this)
+                .extra(Utils.EXTRA_KEY_NAME, mLeagues.get(position).getName())
+                .extra(Utils.EXTRA_KEY_LEAGUE_ID, mLeagues.get(position).getId().toString())
+                .start();
         finish();
     }
 }

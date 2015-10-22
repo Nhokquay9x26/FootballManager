@@ -51,6 +51,7 @@ public class FootBallTeamAdapter extends RecyclerView.Adapter<FootBallTeamAdapte
 
         public ViewHolder(View view) {
             super(view);
+            view.setOnClickListener(this);
             mTvName = (TextView) view.findViewById(R.id.tvName);
             mCircleImageView = (CircleImageView) view.findViewById(R.id.circleImageView);
         }
