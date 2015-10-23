@@ -42,7 +42,6 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
     LinearLayoutManager mLinearLayoutManager;
     ScaleInAnimationAdapter scaleAdapter;
     int getId;
-    String pos;
     ToolBar mToolBar;
 
     @AfterViews
@@ -53,7 +52,6 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
         Bundle bundle = getIntent().getExtras();
         String name = bundle.getString(Utils.EXTRA_KEY_NAME);
         getId = Integer.parseInt(bundle.getString(Utils.EXTRA_KEY_LEAGUE_ID));
-        pos = bundle.getString("position");
         mEdtName = (EditText) findViewById(R.id.edtName);
         mEdtName.setText(name);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
@@ -101,9 +99,11 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
                         EditText mEdtName = (EditText) dialogBuilder.findViewById(R.id.edtName);
                         EditText mEdtNationality = (EditText) dialogBuilder.findViewById(R.id.edtNationality);
                         EditText mEdtYear = (EditText) dialogBuilder.findViewById(R.id.edtYear);
+
                         String name = mEdtName.getText().toString();
                         String nationality = mEdtNationality.getText().toString();
                         String year = mEdtYear.getText().toString();
+
                         FootBallTeamItem footBallTeamItem = new FootBallTeamItem(R.drawable.ic_football, name, nationality, year, getId);
                         footBallTeamItem.save();
                         mTeams.add(footBallTeamItem);
@@ -117,6 +117,7 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
     @Override
     public void onItemClick(int position) {
         PlayerActivity_.intent(FootBallTeamActivity.this)
+                .extra(Utils.EXTRA_KEY_TEAM_ID, mTeams.get(position).getId().toString())
                 .extra(Utils.EXTRA_KEY_NAME, mTeams.get(position).getName())
                 .extra(Utils.EXTRA_KEY_NATIONALITY, mTeams.get(position).getNationality())
                 .extra(Utils.EXTRA_KEY_YEAR, mTeams.get(position).getYear())

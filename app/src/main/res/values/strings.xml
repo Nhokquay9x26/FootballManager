@@ -6,4 +6,11 @@
     <string name="edittext.add_team.name">Name Team</string>
     <string name="edittext.add_team.nationality">Nationality</string>
     <string name="edittext.add_team.year">Year</string>
+    <string name="edittext.add_player.name">Name Player</string>
+    <string name="edittext.add_player.country">Country</string>
+    <string name="edittext.add_player.weight">Weight</string>
+    <string name="edittext.add_player.height">Height</string>
+    <string name="edittext.add_player.position">Position</string>
+    <string name="edittext.add_player.birthday">Birthday</string>
+    <string name="edittext.add_player.number">Number</string>
 </resources>
