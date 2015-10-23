@@ -66,7 +66,11 @@ public class FootBallTeamAdapter extends RecyclerView.Adapter<FootBallTeamAdapte
 
     @Override
     public int getItemCount() {
-        return mTeams.size();
+        if (mTeams!=null) {
+            return mTeams.size();
+        }else {
+            return 0;
+        }
     }
 
     public interface OnItemListener {

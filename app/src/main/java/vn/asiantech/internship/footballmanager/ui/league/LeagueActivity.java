@@ -116,7 +116,7 @@ public class LeagueActivity extends Activity implements LeagueAdapter.OnItemList
         FootBallTeamActivity_.intent(LeagueActivity.this)
                 .extra(Utils.EXTRA_KEY_NAME, mLeagues.get(position).getName())
                 .extra(Utils.EXTRA_KEY_LEAGUE_ID, mLeagues.get(position).getId().toString())
-                .startForResult(123);
+                .start();
     }
 
     @Override
