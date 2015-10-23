@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <vn.asiantech.internship.footballmanager.widgets.ToolBar
-        android:id="@+id/tool_bar_team"
+        android:id="@+id/tool_bar_play"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -12,16 +12,45 @@
         android:id="@+id/llHeaderBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tool_bar_team"
+        android:layout_below="@+id/tool_bar_play"
         android:background="@color/linerlayout.league.background.header_bar_leage"
-        android:orientation="horizontal"
+        android:gravity="center"
+        android:orientation="vertical"
         android:padding="@dimen/image.league.margin.10dp">
 
-        <ImageView
-            android:id="@+id/imgLogo"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_football" />
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/edtNationality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:gravity="center"
+                android:textColor="@color/textview.splash.text.name"
+                android:textSize="@dimen/textview.league.size.18sp" />
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_football" />
+
+            <EditText
+                android:id="@+id/edtYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:gravity="center"
+                android:textColor="@color/textview.splash.text.name"
+                android:textSize="@dimen/textview.league.size.18sp" />
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/edtName"

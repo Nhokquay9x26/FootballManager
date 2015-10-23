@@ -1,25 +1,12 @@
 package vn.asiantech.internship.footballmanager.ui.league;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
@@ -27,7 +14,7 @@ import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewsById;
+import org.androidannotations.annotations.OnActivityResult;
 
 import java.util.List;
 
@@ -36,14 +23,14 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import vn.asiantech.internship.footballmanager.R;
 import vn.asiantech.internship.footballmanager.common.Utils;
 import vn.asiantech.internship.footballmanager.model.LeagueItem;
-import vn.asiantech.internship.footballmanager.ui.league.footballteam.FootBallTeamActivity;
 import vn.asiantech.internship.footballmanager.ui.league.footballteam.FootBallTeamActivity_;
+import vn.asiantech.internship.footballmanager.widgets.ToolBar;
 
 /**
  * Created by nhokquay9x26 on 20/10/15.
  */
 @EActivity(R.layout.activity_league)
-public class LeagueActivity extends Activity implements LeagueAdapter.OnItemListener {
+public class LeagueActivity extends Activity implements LeagueAdapter.OnItemListener, ToolBar.OnToolBarListener {
 
     private Effectstype effect;
     List<LeagueItem> mLeagues;
@@ -51,10 +38,25 @@ public class LeagueActivity extends Activity implements LeagueAdapter.OnItemList
     RecyclerView mRecyclerView;
     LinearLayoutManager mLinearLayoutManager;
     ScaleInAnimationAdapter scaleAdapter;
+    ToolBar mToolBar;
+    private int mSelect = -1;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mSelect >= 0) {
+            LeagueItem leagueItem = LeagueItem.findById(LeagueItem.class, mLeagues.get(mSelect).getId());
+            mLeagues.set(mSelect, leagueItem);
+            scaleAdapter.notifyDataSetChanged();
+        }
+    }
 
     @AfterViews
     void afterView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
+        mToolBar = (ToolBar) findViewById(R.id.tool_bar_league);
+        mToolBar.setmOnToolBarListener(this);
+        mToolBar.setTitle("LEAGUE");
         mLeagues = LeagueItem.listAll(LeagueItem.class);
         mAdapter = new LeagueAdapter(mLeagues);
         mAdapter.setmOnItemListener(this);
@@ -110,10 +112,20 @@ public class LeagueActivity extends Activity implements LeagueAdapter.OnItemList
 
     @Override
     public void onItemClick(int position) {
+        mSelect = position;
         FootBallTeamActivity_.intent(LeagueActivity.this)
                 .extra(Utils.EXTRA_KEY_NAME, mLeagues.get(position).getName())
                 .extra(Utils.EXTRA_KEY_LEAGUE_ID, mLeagues.get(position).getId().toString())
-                .start();
-        finish();
+                .startForResult(123);
+    }
+
+    @Override
+    public void goBack() {
+        this.finish();
+    }
+
+    @Override
+    public void doEdit() {
+
     }
 }

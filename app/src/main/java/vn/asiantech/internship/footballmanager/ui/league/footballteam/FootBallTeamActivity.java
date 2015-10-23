@@ -1,6 +1,7 @@
 package vn.asiantech.internship.footballmanager.ui.league.footballteam;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,18 +25,16 @@ import vn.asiantech.internship.footballmanager.R;
 import vn.asiantech.internship.footballmanager.common.Utils;
 import vn.asiantech.internship.footballmanager.model.FootBallTeamItem;
 import vn.asiantech.internship.footballmanager.model.LeagueItem;
-import vn.asiantech.internship.footballmanager.ui.league.LeagueActivity_;
-import vn.asiantech.internship.footballmanager.ui.league.LeagueAdapter;
-import vn.asiantech.internship.footballmanager.ui.league.player.PlayerActivity;
 import vn.asiantech.internship.footballmanager.ui.league.player.PlayerActivity_;
+import vn.asiantech.internship.footballmanager.widgets.ToolBar;
 
 /**
  * Created by nhokquay9x26 on 21/10/15.
  */
 @EActivity(R.layout.activity_footballteam)
-public class FootBallTeamActivity extends Activity implements FootBallTeamAdapter.OnItemListener {
+public class FootBallTeamActivity extends Activity implements FootBallTeamAdapter.OnItemListener, ToolBar.OnToolBarListener {
 
-    TextView mTvName;
+    EditText mEdtName;
     private Effectstype effect;
     List<FootBallTeamItem> mTeams;
     FootBallTeamAdapter mAdapter;
@@ -43,14 +42,20 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
     LinearLayoutManager mLinearLayoutManager;
     ScaleInAnimationAdapter scaleAdapter;
     int getId;
+    String pos;
+    ToolBar mToolBar;
 
     @AfterViews
     void afterView() {
+        mToolBar = (ToolBar) findViewById(R.id.tool_bar_team);
+        mToolBar.setmOnToolBarListener(this);
+        mToolBar.setTitle("Team");
         Bundle bundle = getIntent().getExtras();
         String name = bundle.getString(Utils.EXTRA_KEY_NAME);
         getId = Integer.parseInt(bundle.getString(Utils.EXTRA_KEY_LEAGUE_ID));
-        mTvName = (TextView) findViewById(R.id.tvName);
-        mTvName.setText(name);
+        pos = bundle.getString("position");
+        mEdtName = (EditText) findViewById(R.id.edtName);
+        mEdtName.setText(name);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
         mTeams = FootBallTeamItem.findWithQuery(FootBallTeamItem.class, "Select * from Team where leagueId = " + getId);
         mAdapter = new FootBallTeamAdapter(mTeams);
@@ -113,6 +118,38 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
     public void onItemClick(int position) {
         PlayerActivity_.intent(FootBallTeamActivity.this)
                 .extra(Utils.EXTRA_KEY_NAME, mTeams.get(position).getName())
+                .extra(Utils.EXTRA_KEY_NATIONALITY, mTeams.get(position).getNationality())
+                .extra(Utils.EXTRA_KEY_YEAR, mTeams.get(position).getYear())
                 .start();
+    }
+
+    @Override
+    public void goBack() {
+        this.finish();
+    }
+
+    @Override
+    public void doEdit() {
+        boolean isEditting = mToolBar.getEditing();
+        if (isEditting) {
+            updateLeague();
+        } else {
+            editLeague();
+        }
+    }
+
+    private void editLeague() {
+        mEdtName.setEnabled(true);
+        mToolBar.changeEditImage();
+    }
+
+    private void updateLeague() {
+        String newName = mEdtName.getText().toString();
+        LeagueItem leagueItem = LeagueItem.findById(LeagueItem.class, getId);
+        leagueItem.setName(newName);
+        leagueItem.save();
+
+        mEdtName.setEnabled(false);
+        mToolBar.changeEditImage();
     }
 }

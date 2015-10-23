@@ -5,7 +5,7 @@
     android:layout_margin="@dimen/image.league.margin.10dp"
     android:orientation="horizontal">
 
-    <vn.asiantech.internship.footballmanager.widget.CircleImageView
+    <vn.asiantech.internship.footballmanager.widgets.CircleImageView
         android:id="@+id/circleImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

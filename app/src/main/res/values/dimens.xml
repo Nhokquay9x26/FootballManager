@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!--file dimen of activity_league-->
-    <dimen name="linnerlayout.league.height.48dp">48dp</dimen>
+    <dimen name="linearlayout.tool_bar.height.48dp">48dp</dimen>
     <dimen name="textview.league.size.18sp">18sp</dimen>
     <dimen name="image.league.margin.imgadd.10dp">10dp</dimen>
 

@@ -1,6 +1,5 @@
 package vn.asiantech.internship.footballmanager.ui.league;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import java.util.List;
 
 import vn.asiantech.internship.footballmanager.R;
 import vn.asiantech.internship.footballmanager.model.LeagueItem;
-import vn.asiantech.internship.footballmanager.widget.CircleImageView;
+import vn.asiantech.internship.footballmanager.widgets.CircleImageView;
 
 /**
  * Created by nhokquay9x26 on 20/10/15.

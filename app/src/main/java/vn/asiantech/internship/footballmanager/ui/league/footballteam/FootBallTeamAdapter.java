@@ -10,7 +10,7 @@ import java.util.List;
 
 import vn.asiantech.internship.footballmanager.R;
 import vn.asiantech.internship.footballmanager.model.FootBallTeamItem;
-import vn.asiantech.internship.footballmanager.widget.CircleImageView;
+import vn.asiantech.internship.footballmanager.widgets.CircleImageView;
 
 /**
  * Created by nhokquay9x26 on 21/10/15.

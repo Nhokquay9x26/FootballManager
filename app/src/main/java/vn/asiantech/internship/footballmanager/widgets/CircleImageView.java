@@ -1,4 +1,4 @@
-package vn.asiantech.internship.footballmanager.widget;
+package vn.asiantech.internship.footballmanager.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
