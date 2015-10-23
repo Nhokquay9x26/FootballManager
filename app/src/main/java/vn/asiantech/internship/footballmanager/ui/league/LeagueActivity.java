@@ -1,20 +1,21 @@
 package vn.asiantech.internship.footballmanager.ui.league;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+import com.melnykov.fab.FloatingActionButton;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.OnActivityResult;
 
 import java.util.List;
 
@@ -54,16 +55,26 @@ public class LeagueActivity extends Activity implements LeagueAdapter.OnItemList
     @AfterViews
     void afterView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
-        mToolBar = (ToolBar) findViewById(R.id.tool_bar_league);
-        mToolBar.setmOnToolBarListener(this);
-        mToolBar.setTitle("LEAGUE");
         mLeagues = LeagueItem.listAll(LeagueItem.class);
         mAdapter = new LeagueAdapter(mLeagues);
         mAdapter.setmOnItemListener(this);
         mRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        toolBar();
+        animationRecycleView();
 
+    }
+
+    public void toolBar() {
+        mToolBar = (ToolBar) findViewById(R.id.tool_bar_league);
+        mToolBar.setmOnToolBarListener(this);
+        mToolBar.setTitle("LEAGUE");
+    }
+
+    public void animationRecycleView() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.imgAdd);
+        fab.attachToRecyclerView(mRecyclerView);
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAdapter);
         scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
         scaleAdapter.setDuration(500);
@@ -120,8 +131,37 @@ public class LeagueActivity extends Activity implements LeagueAdapter.OnItemList
     }
 
     @Override
+    public void onDeleteItemClick(final int position) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Delete League");
+        dialog.setMessage(Html.fromHtml("Do you delete " + ("<b>" + mLeagues.get(position).getName() + "</b>") + "?"));
+        dialog.setCancelable(false);
+        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mLeagues.get(position).delete();
+                mLeagues.remove(position);
+                scaleAdapter.notifyDataSetChanged();
+            }
+        });
+        dialog.setNegativeButton("Cancel", null);
+        dialog.show();
+    }
+
+    @Override
     public void goBack() {
-        this.finish();
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Delete League");
+        dialog.setMessage(Html.fromHtml("You exit ?"));
+        dialog.setCancelable(false);
+        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        dialog.setNegativeButton("Cancel", null);
+        dialog.show();
     }
 
     @Override

@@ -24,6 +24,7 @@
         <activity android:name=".ui.league.LeagueActivity_" />
         <activity android:name=".ui.league.footballteam.FootBallTeamActivity_" />
         <activity android:name=".ui.league.player.PlayerActivity_" />
+        <activity android:name=".ui.league.playerdetail.PlayDetailActivity_" />
 
         <meta-data
             android:name="DATABASE"

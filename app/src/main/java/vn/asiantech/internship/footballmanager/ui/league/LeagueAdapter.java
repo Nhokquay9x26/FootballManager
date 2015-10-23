@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -40,24 +41,29 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(LeagueAdapter.ViewHolder holder, int position) {
-        holder.tvName.setText(mLeagues.get(position).getName());
+        holder.mTvName.setText(mLeagues.get(position).getName());
         holder.mCircleImageViewLogo.setImageResource(mLeagues.get(position).getLogo());
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView tvName;
+        private TextView mTvName;
         private CircleImageView mCircleImageViewLogo;
+        private ImageView mImgDelete;
 
         public ViewHolder(View convertView) {
             super(convertView);
             convertView.setOnClickListener(this);
-            tvName = (TextView) convertView.findViewById(R.id.tvName);
+            mTvName = (TextView) convertView.findViewById(R.id.tvName);
+            mImgDelete = (ImageView) convertView.findViewById(R.id.imgDelete);
+            mImgDelete.setOnClickListener(this);
             mCircleImageViewLogo = (CircleImageView) convertView.findViewById(R.id.circleImageView);
         }
 
         @Override
         public void onClick(View v) {
-            if (mOnItemListener != null) {
+            if (v.getId() == R.id.imgDelete) {
+                mOnItemListener.onDeleteItemClick(getAdapterPosition());
+            } else if (mOnItemListener != null) {
                 mOnItemListener.onItemClick(getAdapterPosition());
             }
         }
@@ -73,6 +79,7 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.ViewHolder
 
     public interface OnItemListener {
         void onItemClick(int position);
-    }
 
+        void onDeleteItemClick(int position);
+    }
 }
