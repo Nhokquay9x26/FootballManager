@@ -9,4 +9,5 @@ public class Utils {
     public static final String EXTRA_KEY_NATIONALITY = "nationality";
     public static final String EXTRA_KEY_LEAGUE_ID = "leagueId";
     public static final String EXTRA_KEY_TEAM_ID = "teamId";
+    public static final String EXTRA_KEY_PLAYER_ID = "playerId";
 }

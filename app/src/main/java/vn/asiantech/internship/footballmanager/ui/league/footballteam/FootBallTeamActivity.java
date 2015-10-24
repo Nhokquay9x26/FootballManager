@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+import com.melnykov.fab.FloatingActionButton;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -25,6 +26,7 @@ import vn.asiantech.internship.footballmanager.R;
 import vn.asiantech.internship.footballmanager.common.Utils;
 import vn.asiantech.internship.footballmanager.model.FootBallTeamItem;
 import vn.asiantech.internship.footballmanager.model.LeagueItem;
+import vn.asiantech.internship.footballmanager.model.PlayerItem;
 import vn.asiantech.internship.footballmanager.ui.league.player.PlayerActivity_;
 import vn.asiantech.internship.footballmanager.widgets.ToolBar;
 
@@ -43,12 +45,24 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
     ScaleInAnimationAdapter scaleAdapter;
     int getId;
     ToolBar mToolBar;
+    private int mSelect = -1;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mSelect >= 0) {
+            FootBallTeamItem footBallTeamItem = FootBallTeamItem.findById(FootBallTeamItem.class, mTeams.get(mSelect).getId());
+            mTeams.set(mSelect, footBallTeamItem);
+            scaleAdapter.notifyDataSetChanged();
+        }
+    }
 
     @AfterViews
     void afterView() {
         mToolBar = (ToolBar) findViewById(R.id.tool_bar_team);
         mToolBar.setmOnToolBarListener(this);
-        mToolBar.setTitle("Team");
+        mToolBar.setTitle("TEAM");
+
         Bundle bundle = getIntent().getExtras();
         String name = bundle.getString(Utils.EXTRA_KEY_NAME);
         getId = Integer.parseInt(bundle.getString(Utils.EXTRA_KEY_LEAGUE_ID));
@@ -61,7 +75,13 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
         mRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        animationRecycle();
 
+    }
+
+    public void animationRecycle() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.imgAdd);
+        fab.attachToRecyclerView(mRecyclerView);
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAdapter);
         scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
         scaleAdapter.setDuration(500);
@@ -116,6 +136,7 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
 
     @Override
     public void onItemClick(int position) {
+        mSelect = position;
         PlayerActivity_.intent(FootBallTeamActivity.this)
                 .extra(Utils.EXTRA_KEY_TEAM_ID, mTeams.get(position).getId().toString())
                 .extra(Utils.EXTRA_KEY_NAME, mTeams.get(position).getName())
@@ -131,8 +152,8 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
 
     @Override
     public void doEdit() {
-        boolean isEditting = mToolBar.getEditing();
-        if (isEditting) {
+        boolean isEditing = mToolBar.getEditing();
+        if (isEditing) {
             updateLeague();
         } else {
             editLeague();
