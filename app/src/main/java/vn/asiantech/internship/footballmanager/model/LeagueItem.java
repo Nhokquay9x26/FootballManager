@@ -10,7 +10,7 @@ import lombok.Data;
  * Created by nhokquay9x26 on 20/10/15.
  */
 @Data
-@Table(name = "LEAGE")
+@Table(name = "LEAGUE")
 public class LeagueItem extends SugarRecord {
     @Column(name = "name")
     private String name;

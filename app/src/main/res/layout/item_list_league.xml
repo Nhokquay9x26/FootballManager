@@ -8,8 +8,9 @@
 
     <vn.asiantech.internship.footballmanager.widgets.CircleImageView
         android:id="@+id/circleImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/circle_image.width.68dp"
+        android:layout_height="@dimen/circle_image.height.68dp"
+        android:scaleType="centerCrop"
         android:layout_gravity="center"
         android:src="@drawable/ic_football" />
 

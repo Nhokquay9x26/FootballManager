@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -40,10 +42,10 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.tvName.setText(mPlayers.get(position).getName());
-        holder.tvNumber.setText(mPlayers.get(position).getNumber());
-        holder.tvPosition.setText(mPlayers.get(position).getPosition());
-        holder.tvCountry.setText(mPlayers.get(position).getCountry());
+        holder.mTvName.setText(mPlayers.get(position).getName());
+        holder.mTvNumber.setText(mPlayers.get(position).getNumber());
+        holder.mTvPosition.setText(mPlayers.get(position).getPosition());
+        holder.mTvCountry.setText(mPlayers.get(position).getCountry());
     }
 
     @Override
@@ -57,25 +59,28 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CircleImageView mCircleImageView;
-        TextView tvName;
-        TextView tvNumber;
-        TextView tvAge;
-        TextView tvPosition;
-        TextView tvCountry;
+        TextView mTvName;
+        TextView mTvNumber;
+        TextView mTvPosition;
+        TextView mTvCountry;
+        ImageView imgDelete;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            this.tvName = (TextView) itemView.findViewById(R.id.tvName);
-            this.tvNumber = (TextView) itemView.findViewById(R.id.tvNumber);
-            this.tvAge = (TextView) itemView.findViewById(R.id.tvAge);
-            this.tvPosition = (TextView) itemView.findViewById(R.id.tvPosition);
-            this.tvCountry = (TextView) itemView.findViewById(R.id.tvCountry);
+            mTvName = (TextView) itemView.findViewById(R.id.tvName);
+            mTvNumber = (TextView) itemView.findViewById(R.id.tvNumber);
+            mTvPosition = (TextView) itemView.findViewById(R.id.tvPosition);
+            mTvCountry = (TextView) itemView.findViewById(R.id.tvCountry);
+            imgDelete = (ImageView) itemView.findViewById(R.id.imgDelete);
+            imgDelete.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if (mOnItemListener != null) {
+            if (v.getId() == R.id.imgDelete) {
+                mOnItemListener.onDeleteItemClick(getAdapterPosition());
+            } else if (mOnItemListener != null) {
                 mOnItemListener.onItemClick(getAdapterPosition());
             }
         }
@@ -83,5 +88,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
 
     public interface OnItemListener {
         void onItemClick(int position);
+
+        void onDeleteItemClick(int position);
     }
 }

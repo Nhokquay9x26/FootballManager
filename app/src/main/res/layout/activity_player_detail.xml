@@ -21,21 +21,25 @@
         android:padding="@dimen/image.league.margin.10dp">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="@dimen/circle_image.width.68dp"
+            android:layout_height="@dimen/circle_image.height.68dp">
 
             <vn.asiantech.internship.footballmanager.widgets.CircleImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/imgAvatar"
+                android:layout_width="@dimen/circle_image.width.68dp"
+                android:layout_height="@dimen/circle_image.height.68dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_football" />
 
             <EditText
                 android:id="@+id/edtNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="7dp"
                 android:background="@null"
                 android:enabled="false"
-                android:text="9"
                 android:textColor="@color/textview.splash.text.name"
                 android:textSize="@dimen/textview.league.size.18sp" />
 
@@ -71,7 +75,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="POSITION" />
+            android:text="@string/textview.player_detail.position"
+            android:textSize="@dimen/textview.league.size.18sp" />
 
         <EditText
             android:id="@+id/edtPosition"
@@ -82,56 +87,11 @@
             android:enabled="false"
             android:textSize="@dimen/textview.league.size.18sp" />
 
-        <LinearLayout
+        <include
+            layout="@layout/line_width"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="AGE" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="28" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="28" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="COUNTRY" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Anh" />
-
-
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/edtPosition" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -149,15 +109,34 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="HEIGHT" />
+                    android:text="@string/textview.player_detail.age"
+                    android:textSize="@dimen/textview.league.size.18sp" />
 
                 <TextView
+                    android:id="@+id/tvAge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="170" />
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:enabled="false"
+                    android:textColor="@color/textview.player_detail"
+                    android:textSize="@dimen/textview.size.30sp" />
 
-
+                <EditText
+                    android:id="@+id/edtBirthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:enabled="false"
+                    android:text="28"
+                    android:textSize="@dimen/textview.league.size.18sp" />
             </LinearLayout>
+
+            <include
+                layout="@layout/line_height"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,14 +148,104 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="WEIGHT" />
+                    android:text="@string/textview.player_detail.country"
+                    android:textSize="@dimen/textview.league.size.18sp" />
+
+                <EditText
+                    android:id="@+id/edtCountry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:enabled="false"
+                    android:textColor="@color/textview.player_detail"
+                    android:textSize="@dimen/textview.size.30sp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <include
+            layout="@layout/line_width"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/edtPosition" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="75kg" />
+                    android:text="@string/textview.player_detail.height"
+                    android:textSize="@dimen/textview.league.size.18sp" />
+
+                <EditText
+                    android:id="@+id/edtHeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:enabled="false"
+                    android:textColor="@color/textview.player_detail"
+                    android:textSize="@dimen/textview.size.30sp" />
+
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:enabled="false"
+                    android:textSize="@dimen/textview.league.size.18sp" />
+
+            </LinearLayout>
+
+            <include
+                layout="@layout/line_height"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/textview.player_detail.weight"
+                    android:textSize="@dimen/textview.league.size.18sp" />
+
+                <EditText
+                    android:id="@+id/edtWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:enabled="false"
+                    android:textColor="@color/textview.player_detail"
+                    android:textSize="@dimen/textview.size.30sp" />
 
             </LinearLayout>
         </LinearLayout>
+
+        <include
+            layout="@layout/line_width"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/edtPosition" />
     </LinearLayout>
 </RelativeLayout>

@@ -3,6 +3,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="circle_image.width.68dp">68dp</dimen>
+    <dimen name="circle_image.height.68dp">68dp</dimen>
+
     <!--file dimen of activity_league-->
     <dimen name="linearlayout.tool_bar.height.48dp">48dp</dimen>
     <dimen name="textview.league.size.18sp">18sp</dimen>
@@ -13,4 +16,6 @@
 
     <!--file dimen of item_list_league-->
     <dimen name="image.league.margin.10dp">10dp</dimen>
+    <dimen name="view.line.height.1dp">1dp</dimen>
+    <dimen name="textview.size.30sp">30sp</dimen>
 </resources>

@@ -4,6 +4,8 @@ import com.orm.SugarRecord;
 import com.orm.dsl.Column;
 import com.orm.dsl.Table;
 
+import java.util.Date;
+
 import lombok.Data;
 
 /**
@@ -33,7 +35,14 @@ public class PlayerItem extends SugarRecord {
 
     }
 
-    public PlayerItem(String name, String number, String country, String weight, String height, String position, String birthday, long teamId) {
+    public String getAge() {
+        int day = 2015 - Integer.parseInt(getBirthday().toString().substring(0,4));
+        String age = String.valueOf(day);
+        return age;
+    }
+
+    public PlayerItem(String name, String number, String country, String weight, String height,
+                      String position, String birthday, long teamId) {
         this.name = name;
         this.weight = weight;
         this.height = height;

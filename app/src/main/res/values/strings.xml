@@ -13,4 +13,15 @@
     <string name="edittext.add_player.position">Position</string>
     <string name="edittext.add_player.birthday">Birthday</string>
     <string name="edittext.add_player.number">Number</string>
+    <string name="dialog_exit_tittle">Exit</string>
+    <string name="dialog_exit_message">You are exit?</string>
+    <string name="dialog_delete_tittle">Delete Item</string>
+    <string name="dialog_delete_message">You are delete</string>
+    <string name="button.dialog.text.cancel">Cancel</string>
+    <string name="button.dialog.text.add">Add</string>
+    <string name="textview.player_detail.position">POSITION</string>
+    <string name="textview.player_detail.weight">WEIGHT</string>
+    <string name="textview.player_detail.height">HEIGHT</string>
+    <string name="textview.player_detail.country">COUNTRY</string>
+    <string name="textview.player_detail.age">AGE</string>
 </resources>

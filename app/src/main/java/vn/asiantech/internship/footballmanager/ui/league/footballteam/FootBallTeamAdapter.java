@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -48,17 +49,22 @@ public class FootBallTeamAdapter extends RecyclerView.Adapter<FootBallTeamAdapte
 
         TextView mTvName;
         CircleImageView mCircleImageView;
+        ImageView imgDelete;
 
         public ViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
+            imgDelete = (ImageView) view.findViewById(R.id.imgDelete);
+            imgDelete.setOnClickListener(this);
             mTvName = (TextView) view.findViewById(R.id.tvName);
             mCircleImageView = (CircleImageView) view.findViewById(R.id.circleImageView);
         }
 
         @Override
         public void onClick(View v) {
-            if (mOnItemListener != null) {
+            if (v.getId() == R.id.imgDelete) {
+                mOnItemListener.onDeleteItemClick(getAdapterPosition());
+            } else if (mOnItemListener != null) {
                 mOnItemListener.onItemClick(getAdapterPosition());
             }
         }
@@ -66,14 +72,16 @@ public class FootBallTeamAdapter extends RecyclerView.Adapter<FootBallTeamAdapte
 
     @Override
     public int getItemCount() {
-        if (mTeams!=null) {
+        if (mTeams != null) {
             return mTeams.size();
-        }else {
+        } else {
             return 0;
         }
     }
 
     public interface OnItemListener {
         void onItemClick(int position);
+
+        void onDeleteItemClick(int position);
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,16 +29,22 @@ import vn.asiantech.internship.footballmanager.model.FootBallTeamItem;
 import vn.asiantech.internship.footballmanager.model.LeagueItem;
 import vn.asiantech.internship.footballmanager.model.PlayerItem;
 import vn.asiantech.internship.footballmanager.ui.league.player.PlayerActivity_;
+import vn.asiantech.internship.footballmanager.widgets.AddDataDialog;
+import vn.asiantech.internship.footballmanager.widgets.ConfirmDialog;
 import vn.asiantech.internship.footballmanager.widgets.ToolBar;
 
 /**
  * Created by nhokquay9x26 on 21/10/15.
  */
 @EActivity(R.layout.activity_footballteam)
-public class FootBallTeamActivity extends Activity implements FootBallTeamAdapter.OnItemListener, ToolBar.OnToolBarListener {
-
+public class FootBallTeamActivity extends Activity implements FootBallTeamAdapter.OnItemListener,
+        ToolBar.OnToolBarListener, ConfirmDialog.OnConfirmDialogListener,
+        AddDataDialog.OnAddDataListener {
     EditText mEdtName;
-    private Effectstype effect;
+    EditText mEdtNationality;
+    EditText mEdtYear;
+
+    EditText mEdtNameShow;
     List<FootBallTeamItem> mTeams;
     FootBallTeamAdapter mAdapter;
     RecyclerView mRecyclerView;
@@ -62,12 +69,9 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
         mToolBar = (ToolBar) findViewById(R.id.tool_bar_team);
         mToolBar.setmOnToolBarListener(this);
         mToolBar.setTitle("TEAM");
-
         Bundle bundle = getIntent().getExtras();
-        String name = bundle.getString(Utils.EXTRA_KEY_NAME);
         getId = Integer.parseInt(bundle.getString(Utils.EXTRA_KEY_LEAGUE_ID));
-        mEdtName = (EditText) findViewById(R.id.edtName);
-        mEdtName.setText(name);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
         mTeams = FootBallTeamItem.findWithQuery(FootBallTeamItem.class, "Select * from Team where leagueId = " + getId);
         mAdapter = new FootBallTeamAdapter(mTeams);
@@ -75,11 +79,14 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
         mRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        animationRecycle();
-
+        init();
     }
 
-    public void animationRecycle() {
+    public void init() {
+        LeagueItem leagueItem = LeagueItem.findById(LeagueItem.class, getId);
+        mEdtNameShow = (EditText) findViewById(R.id.edtName);
+        mEdtNameShow.setText(leagueItem.getName());
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.imgAdd);
         fab.attachToRecyclerView(mRecyclerView);
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAdapter);
@@ -90,48 +97,15 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
     }
 
     @Click(R.id.imgAdd)
-    void addData(View v) {
-        customDialog(v);
-    }
-
-    public void customDialog(View v) {
-        effect = Effectstype.SlideBottom;
-
-        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(this);
-        dialogBuilder
-                .isCancelableOnTouchOutside(false)
-                .withTitle("Add Teams")
-                .withTitleColor("#000000")
-                .withEffect(effect)
-                .withButton1Text("Cancel")
-                .withDialogColor("#0099FF")
-                .withButton2Text("Ok")
-                .setCustomView(R.layout.dialog_add_team, v.getContext())
-                .setButton1Click(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialogBuilder.dismiss();
-                    }
-                })
-                .setButton2Click(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EditText mEdtName = (EditText) dialogBuilder.findViewById(R.id.edtName);
-                        EditText mEdtNationality = (EditText) dialogBuilder.findViewById(R.id.edtNationality);
-                        EditText mEdtYear = (EditText) dialogBuilder.findViewById(R.id.edtYear);
-
-                        String name = mEdtName.getText().toString();
-                        String nationality = mEdtNationality.getText().toString();
-                        String year = mEdtYear.getText().toString();
-
-                        FootBallTeamItem footBallTeamItem = new FootBallTeamItem(R.drawable.ic_football, name, nationality, year, getId);
-                        footBallTeamItem.save();
-                        mTeams.add(footBallTeamItem);
-                        scaleAdapter.notifyDataSetChanged();
-                        dialogBuilder.dismiss();
-                    }
-                })
-                .show();
+    void addData() {
+        LayoutInflater inflater = getLayoutInflater();
+        View dialoglayout = inflater.inflate(R.layout.dialog_add_team, null);
+        mEdtName = (EditText) dialoglayout.findViewById(R.id.edtName);
+        mEdtNationality = (EditText) dialoglayout.findViewById(R.id.edtNationality);
+        mEdtYear = (EditText) dialoglayout.findViewById(R.id.edtYear);
+        AddDataDialog dialogAdd = new AddDataDialog();
+        dialogAdd.isAdd(this, dialoglayout, "Add Team");
+        dialogAdd.setmOnAddDataListener(this);
     }
 
     @Override
@@ -139,15 +113,21 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
         mSelect = position;
         PlayerActivity_.intent(FootBallTeamActivity.this)
                 .extra(Utils.EXTRA_KEY_TEAM_ID, mTeams.get(position).getId().toString())
-                .extra(Utils.EXTRA_KEY_NAME, mTeams.get(position).getName())
-                .extra(Utils.EXTRA_KEY_NATIONALITY, mTeams.get(position).getNationality())
-                .extra(Utils.EXTRA_KEY_YEAR, mTeams.get(position).getYear())
                 .start();
     }
 
     @Override
+    public void onDeleteItemClick(int position) {
+        String mTitle = getString(R.string.dialog_delete_tittle);
+        String mMessage = getString(R.string.dialog_delete_message);
+        ConfirmDialog dialog = new ConfirmDialog();
+        dialog.isConfirm(this, mTitle, mMessage, position);
+        dialog.setmOnConfirmDialogListener(this);
+    }
+
+    @Override
     public void goBack() {
-        this.finish();
+        finish();
     }
 
     @Override
@@ -173,5 +153,28 @@ public class FootBallTeamActivity extends Activity implements FootBallTeamAdapte
 
         mEdtName.setEnabled(false);
         mToolBar.changeEditImage();
+    }
+
+
+    @Override
+    public void onDialogConfirm(int position) {
+        if (position == -1) {
+            finish();
+        } else {
+            mTeams.get(position).delete();
+            mTeams.remove(position);
+            scaleAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onAddData() {
+        String name = mEdtName.getText().toString();
+        String nationality = mEdtNationality.getText().toString();
+        String year = mEdtYear.getText().toString();
+        FootBallTeamItem teamItem = new FootBallTeamItem(R.drawable.ic_add, name, nationality, year, getId);
+        teamItem.save();
+        mTeams.add(teamItem);
+        scaleAdapter.notifyDataSetChanged();
     }
 }
