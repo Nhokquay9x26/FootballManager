@@ -1,4 +1,4 @@
-package vn.asiantech.internship.footballmanager.widgets;
+package vn.asiantech.internship.footballmanager.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;

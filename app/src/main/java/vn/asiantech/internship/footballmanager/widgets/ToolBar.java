@@ -16,6 +16,7 @@ import vn.asiantech.internship.footballmanager.R;
  */
 public class ToolBar extends RelativeLayout implements View.OnClickListener {
     Context mContext;
+    boolean isImageButton;
     private TextView mTvTitle;
     private OnToolBarListener mOnToolBarListener;
     private ImageView mImgEdit;
@@ -26,9 +27,10 @@ public class ToolBar extends RelativeLayout implements View.OnClickListener {
     }
 
 
-    public ToolBar(Context context) {
+    public ToolBar(Context context, boolean isImageButton) {
         super(context);
         mContext = context;
+        this.isImageButton = isImageButton;
         init(context);
     }
 
@@ -45,6 +47,9 @@ public class ToolBar extends RelativeLayout implements View.OnClickListener {
         mImgEdit = (ImageView) rootView.findViewById(R.id.imgEdit);
         mImgBack.setOnClickListener(this);
         mImgEdit.setOnClickListener(this);
+//        if(isImageButton){
+//            mImgEdit.setImageResource(R.drawable.ic_menu);
+//        }
         this.addView(rootView);
     }
 

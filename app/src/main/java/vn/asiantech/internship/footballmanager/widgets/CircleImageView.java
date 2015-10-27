@@ -21,6 +21,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import vn.asiantech.internship.footballmanager.R;
+import vn.asiantech.internship.footballmanager.ui.league.LeagueActivity;
 
 public class CircleImageView extends ImageView {
 
@@ -294,5 +295,6 @@ public class CircleImageView extends ImageView {
 
         mBitmapShader.setLocalMatrix(mShaderMatrix);
     }
+
 
 }

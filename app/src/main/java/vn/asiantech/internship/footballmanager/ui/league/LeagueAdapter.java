@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import vn.asiantech.internship.footballmanager.R;
+import vn.asiantech.internship.footballmanager.common.Utils;
 import vn.asiantech.internship.footballmanager.model.LeagueItem;
 import vn.asiantech.internship.footballmanager.widgets.CircleImageView;
 
@@ -29,7 +30,7 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.ViewHolder
         this.mOnItemListener = mOnItemListener;
     }
 
-    public LeagueAdapter(List<LeagueItem> mLeagues) {
+    public LeagueAdapter(List<LeagueItem> mLeagues, boolean isImgDelete) {
         this.mLeagues = mLeagues;
     }
 
@@ -42,7 +43,8 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.ViewHolder
     @Override
     public void onBindViewHolder(LeagueAdapter.ViewHolder holder, int position) {
         holder.mTvName.setText(mLeagues.get(position).getName());
-        holder.mCircleImageViewLogo.setImageResource(mLeagues.get(position).getLogo());
+        Utils.loadImage(mLeagues.get(position).getLogo(), holder.mCircleImageViewLogo);
+
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

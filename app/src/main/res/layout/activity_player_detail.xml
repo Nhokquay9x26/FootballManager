@@ -54,12 +54,10 @@
             android:textColor="@color/textview.splash.text.name"
             android:textSize="@dimen/textview.league.size.18sp" />
 
-        <EditText
-            android:id="@+id/edtTeam"
+        <TextView
+            android:id="@+id/tvTeam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:enabled="false"
             android:textColor="@color/textview.splash.text.name"
             android:textSize="@dimen/textview.league.size.18sp" />
 
@@ -78,13 +76,11 @@
             android:text="@string/textview.player_detail.position"
             android:textSize="@dimen/textview.league.size.18sp" />
 
-        <EditText
-            android:id="@+id/edtPosition"
+        <TextView
+            android:id="@+id/tvPosition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@null"
-            android:enabled="false"
             android:textSize="@dimen/textview.league.size.18sp" />
 
         <include
@@ -122,14 +118,11 @@
                     android:textColor="@color/textview.player_detail"
                     android:textSize="@dimen/textview.size.30sp" />
 
-                <EditText
-                    android:id="@+id/edtBirthday"
+                <TextView
+                    android:id="@+id/tvBirthday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@null"
-                    android:enabled="false"
-                    android:text="28"
                     android:textSize="@dimen/textview.league.size.18sp" />
             </LinearLayout>
 

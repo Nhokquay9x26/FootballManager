@@ -3,16 +3,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <vn.asiantech.internship.footballmanager.widgets.ToolBar
-        android:id="@+id/tool_bar_league"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rlHeaderBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="@dimen/linearlayout.tool_bar.height.48dp"
+        android:background="@color/linearlayout.background.tool_bar">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/image.league.margin.10dp"
+            android:src="@drawable/ic_back" />
+
+        <ImageView
+            android:id="@+id/imgMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/image.league.margin.10dp"
+            android:src="@drawable/ic_menu" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/textview.leage.text.leage"
+            android:textColor="@color/textview.splash.text.name"
+            android:textSize="@dimen/textview.splash.size.18sp" />
+
+        <EditText
+            android:id="@+id/edtSearch"
+            android:layout_toRightOf="@+id/imgBack"
+            android:layout_width="match_parent"
+            android:visibility="invisible"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_toLeftOf="@+id/imgMenu"
+            android:background="@null"
+            android:hint="@string/textview.leage.text.search"
+            android:textColor="@color/textview.splash.text.name"
+            android:textSize="@dimen/textview.splash.size.18sp" />
+
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/imgMenu"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/image.league.margin.10dp"
+            android:src="@drawable/ic_search" />
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tool_bar_league" />
+        android:layout_below="@+id/rlHeaderBar" />
 
     <include
         layout="@layout/button_add"

@@ -12,7 +12,7 @@
         android:layout_height="@dimen/circle_image.height.68dp"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:src="@drawable/ic_football" />
+        android:src="@drawable/ic_camera" />
 
     <TextView
         android:id="@+id/tvName"

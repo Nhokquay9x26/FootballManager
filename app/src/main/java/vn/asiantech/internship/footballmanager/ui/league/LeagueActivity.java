@@ -1,96 +1,125 @@
 package vn.asiantech.internship.footballmanager.ui.league;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import vn.asiantech.internship.footballmanager.R;
 import vn.asiantech.internship.footballmanager.common.Utils;
+import vn.asiantech.internship.footballmanager.dialog.AddDataDialog;
+import vn.asiantech.internship.footballmanager.dialog.ConfirmDialog;
 import vn.asiantech.internship.footballmanager.model.LeagueItem;
 import vn.asiantech.internship.footballmanager.ui.league.footballteam.FootBallTeamActivity_;
-import vn.asiantech.internship.footballmanager.widgets.AddDataDialog;
-import vn.asiantech.internship.footballmanager.widgets.ConfirmDialog;
-import vn.asiantech.internship.footballmanager.widgets.ToolBar;
+import vn.asiantech.internship.footballmanager.widgets.CircleImageView;
 
 /**
  * Created by nhokquay9x26 on 20/10/15.
  */
 @EActivity(R.layout.activity_league)
 public class LeagueActivity extends Activity implements LeagueAdapter.OnItemListener,
-        ToolBar.OnToolBarListener, ConfirmDialog.OnConfirmDialogListener,
-        AddDataDialog.OnAddDataListener {
+        ConfirmDialog.OnConfirmDialogListener, AddDataDialog.OnAddDataListener, TextWatcher {
 
-    EditText mEdtName;
-    List<LeagueItem> mLeagues;
-    LeagueAdapter mAdapter;
+    @ViewById(R.id.recycleView)
     RecyclerView mRecyclerView;
-    LinearLayoutManager mLinearLayoutManager;
-    ScaleInAnimationAdapter scaleAdapter;
-    ToolBar mToolBar;
-    private int mSelect = -1;
+    @ViewById(R.id.imgBtnAdd)
+    FloatingActionButton imgBtnAdd;
+    @ViewById(R.id.edtSearch)
+    EditText mEdtSearch;
+    @ViewById(R.id.tvTitle)
+    TextView mTvTitle;
+    @ViewById(R.id.imgSearch)
+    ImageView mImgBtnSearch;
+
+    private EditText mEdtName;
+    private Bitmap mBitmapLeagueLogo;
+    private CircleImageView mCircleImageView;
+    private List<LeagueItem> mLeagues;
+    private LeagueAdapter mAdapter;
+    private LinearLayoutManager mLinearLayoutManager;
+    private ScaleInAnimationAdapter mScaleAdapter;
+    private int mPositionSelect = -1;
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (mSelect >= 0) {
-            LeagueItem leagueItem = LeagueItem.findById(LeagueItem.class, mLeagues.get(mSelect).getId());
-            mLeagues.set(mSelect, leagueItem);
-            scaleAdapter.notifyDataSetChanged();
+        updateListLeague();
+    }
+
+    public void updateListLeague() {
+        if (mLeagues != null && mPositionSelect >= 0 && mPositionSelect < mLeagues.size()) {
+            long id = mLeagues.get(mPositionSelect).getId();
+            LeagueItem league = LeagueItem.getLeagueById(id);
+            mLeagues.set(mPositionSelect, league);
+            mScaleAdapter.notifyDataSetChanged();
         }
     }
 
     @AfterViews
     void afterView() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
-        mLeagues = LeagueItem.listAll(LeagueItem.class);
-        mAdapter = new LeagueAdapter(mLeagues);
+        mLeagues = LeagueItem.getAllLeague();
+        mAdapter = new LeagueAdapter(mLeagues, true);
         mAdapter.setmOnItemListener(this);
         mRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        init();
-
+        setAnimationRecycleView();
     }
 
-    public void init() {
-        mToolBar = (ToolBar) findViewById(R.id.tool_bar_league);
-        mToolBar.setmOnToolBarListener(this);
-        mToolBar.setTitle("LEAGUE");
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.imgAdd);
-        fab.attachToRecyclerView(mRecyclerView);
+    public void setAnimationRecycleView() {
+        imgBtnAdd.attachToRecyclerView(mRecyclerView);
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAdapter);
-        scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
-        scaleAdapter.setDuration(500);
-        scaleAdapter.setFirstOnly(false);
-        mRecyclerView.setAdapter(scaleAdapter);
+        mScaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
+        mScaleAdapter.setDuration(500);
+        mScaleAdapter.setFirstOnly(false);
+        mRecyclerView.setAdapter(mScaleAdapter);
     }
 
-    @Click(R.id.imgAdd)
+    @Click(R.id.imgBtnAdd)
     void addData() {
         LayoutInflater inflater = getLayoutInflater();
-        View dialoglayout = inflater.inflate(R.layout.dialog_add_league, null);
-        mEdtName = (EditText) dialoglayout.findViewById(R.id.edtName);
+        View dialog = inflater.inflate(R.layout.dialog_add_league, null);
         AddDataDialog dialogAdd = new AddDataDialog();
-        dialogAdd.isAdd(this, dialoglayout, "Add League");
+        dialogAdd.isAdd(this, dialog, getString(R.string.dialog_tittle_add_league));
         dialogAdd.setmOnAddDataListener(this);
+        mEdtName = (EditText) dialog.findViewById(R.id.edtName);
+        mCircleImageView = (CircleImageView) dialog.findViewById(R.id.circleImageView);
+        mCircleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, Utils.PICK_PHOTO_FOR_AVATAR);
+            }
+        });
     }
 
     @Override
     public void onItemClick(int position) {
-        mSelect = position;
+        mPositionSelect = position;
         FootBallTeamActivity_.intent(LeagueActivity.this)
                 .extra(Utils.EXTRA_KEY_LEAGUE_ID, mLeagues.get(position).getId().toString())
                 .start();
@@ -108,32 +137,78 @@ public class LeagueActivity extends Activity implements LeagueAdapter.OnItemList
     }
 
     @Override
-    public void goBack() {
-        showDialog(getString(R.string.dialog_exit_tittle), getString(R.string.dialog_exit_message), -1);
-    }
-
-    @Override
-    public void doEdit() {
-
-    }
-
-    @Override
     public void onDialogConfirm(int position) {
-        if (position == -1) {
-            finish();
-        } else {
-            mLeagues.get(position).delete();
+        if (position >= 0) {
+            long id = mLeagues.get(position).getId();
+            LeagueItem.deleteLeagueById(id);
             mLeagues.remove(position);
-            scaleAdapter.notifyDataSetChanged();
+            mScaleAdapter.notifyDataSetChanged();
+        } else {
+            this.finish();
         }
     }
 
     @Override
     public void onAddData() {
         String name = mEdtName.getText().toString();
-        LeagueItem leagueItem = new LeagueItem(name);
-        leagueItem.save();
-        mLeagues.add(leagueItem);
-        scaleAdapter.notifyDataSetChanged();
+        String logo = Utils.convertBitmapToString(mBitmapLeagueLogo);
+        if (name.equals("")){
+            Toast.makeText(this, getString(R.string.toast_name_empty_error), Toast.LENGTH_LONG).show();
+        } else if(mBitmapLeagueLogo == null) {
+            Toast.makeText(this, getString(R.string.toast_image_empty_error), Toast.LENGTH_LONG).show();
+        }else{
+            LeagueItem leagueItem = new LeagueItem(name, logo);
+            leagueItem.save();
+            mLeagues.add(leagueItem);
+            mScaleAdapter.notifyDataSetChanged();
+            Toast.makeText(this, getString(R.string.toast_add_data_suscess), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Utils.PICK_PHOTO_FOR_AVATAR && data != null) {
+            try {
+                InputStream inputStream = this.getContentResolver().openInputStream(data.getData());
+                mBitmapLeagueLogo = BitmapFactory.decodeStream(inputStream);
+                mCircleImageView.setImageBitmap(mBitmapLeagueLogo);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    boolean click = false;
+
+    @Click(R.id.imgSearch)
+    void searchPlayer() {
+        if (!click) {
+            mEdtSearch.setVisibility(View.VISIBLE);
+            mTvTitle.setVisibility(View.INVISIBLE);
+            mEdtSearch.addTextChangedListener(this);
+            mImgBtnSearch.setImageResource(R.drawable.ic_cancel);
+            click = true;
+        } else {
+            mEdtSearch.setVisibility(View.INVISIBLE);
+            mTvTitle.setVisibility(View.VISIBLE);
+            mEdtSearch.setText("");
+            mImgBtnSearch.setImageResource(R.drawable.ic_search);
+            click = false;
+        }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        Toast.makeText(this, mEdtSearch.getText().toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }

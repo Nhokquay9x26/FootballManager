@@ -24,4 +24,10 @@
     <string name="textview.player_detail.height">HEIGHT</string>
     <string name="textview.player_detail.country">COUNTRY</string>
     <string name="textview.player_detail.age">AGE</string>
+    <string name="textview.leage.text.search">Search Player</string>
+    <string name="dialog_tittle_add_league">Add League</string>
+    <string name="toast_add_data_suscess">Add data suscess</string>
+    <string name="toast_name_empty_error">Name Empty</string>
+    <string name="toast_image_empty_error">Image Empty</string>
+
 </resources>

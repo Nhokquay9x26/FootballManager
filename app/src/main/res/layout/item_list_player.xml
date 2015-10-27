@@ -14,7 +14,7 @@
             android:id="@+id/circleImageView"
             android:layout_width="@dimen/circle_image.width.68dp"
             android:layout_height="@dimen/circle_image.height.68dp"
-            android:src="@drawable/ic_football" />
+            android:src="@drawable/ic_camera" />
 
         <TextView
             android:id="@+id/tvNumber"

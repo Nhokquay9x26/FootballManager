@@ -8,13 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
-import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.melnykov.fab.FloatingActionButton;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
@@ -23,11 +22,10 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import vn.asiantech.internship.footballmanager.R;
 import vn.asiantech.internship.footballmanager.common.Utils;
 import vn.asiantech.internship.footballmanager.model.FootBallTeamItem;
-import vn.asiantech.internship.footballmanager.model.LeagueItem;
 import vn.asiantech.internship.footballmanager.model.PlayerItem;
 import vn.asiantech.internship.footballmanager.ui.league.playerdetail.PlayDetailActivity_;
-import vn.asiantech.internship.footballmanager.widgets.AddDataDialog;
-import vn.asiantech.internship.footballmanager.widgets.ConfirmDialog;
+import vn.asiantech.internship.footballmanager.dialog.AddDataDialog;
+import vn.asiantech.internship.footballmanager.dialog.ConfirmDialog;
 import vn.asiantech.internship.footballmanager.widgets.ToolBar;
 
 /**
@@ -49,6 +47,9 @@ public class PlayerActivity extends Activity implements PlayerAdapter.OnItemList
     EditText mEdtWeight;
     EditText mEdtPosition;
     EditText mEdtBirthday;
+
+    @ViewById(R.id.imgBtnAdd)
+    FloatingActionButton imgBtnAdd;
     int getTeamId;
 
     List<PlayerItem> mPlayers;
@@ -63,9 +64,7 @@ public class PlayerActivity extends Activity implements PlayerAdapter.OnItemList
     protected void onStart() {
         super.onStart();
         if (mSelect >= 0) {
-            PlayerItem playerItem = PlayerItem.findById(PlayerItem.class, mPlayers.get(mSelect).getId());
-            mPlayers.set(mSelect, playerItem);
-            scaleAdapter.notifyDataSetChanged();
+            loadData();
         }
     }
 
@@ -74,20 +73,13 @@ public class PlayerActivity extends Activity implements PlayerAdapter.OnItemList
         mToolBar = (ToolBar) findViewById(R.id.tool_bar_player);
         mToolBar.setTitle("PLAYER");
         mToolBar.setmOnToolBarListener(this);
-
         Bundle bundle = getIntent().getExtras();
         getTeamId = Integer.parseInt(bundle.getString(Utils.EXTRA_KEY_TEAM_ID));
-        mPlayers = PlayerItem.findWithQuery(PlayerItem.class, "Select * from Player where teamId = " + getTeamId);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
-        mAdapter = new PlayerAdapter(mPlayers);
-        mAdapter.setmOnItemListener(this);
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        loadData();
         init();
     }
 
-    public void init() {
+    public void addItemHeader() {
         FootBallTeamItem teamItem = FootBallTeamItem.findById(FootBallTeamItem.class, getTeamId);
         mEdtNameShow = (EditText) findViewById(R.id.edtName);
         mEdtNationality = (EditText) findViewById(R.id.edtNationality);
@@ -96,8 +88,16 @@ public class PlayerActivity extends Activity implements PlayerAdapter.OnItemList
         mEdtNationality.setText(teamItem.getNationality());
         mEdtYear.setText(teamItem.getYear());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.imgAdd);
-        fab.attachToRecyclerView(mRecyclerView);
+    }
+
+    public void loadData() {
+        mPlayers = PlayerItem.findWithQuery(PlayerItem.class, "Select * from Player where teamId = " + getTeamId);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
+        mAdapter = new PlayerAdapter(mPlayers);
+        mAdapter.setmOnItemListener(this);
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAdapter);
         scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
         scaleAdapter.setDuration(500);
@@ -105,7 +105,12 @@ public class PlayerActivity extends Activity implements PlayerAdapter.OnItemList
         mRecyclerView.setAdapter(scaleAdapter);
     }
 
-    @Click(R.id.imgAdd)
+    public void init() {
+        addItemHeader();
+        imgBtnAdd.attachToRecyclerView(mRecyclerView);
+    }
+
+    @Click(R.id.imgBtnAdd)
     void addData(View v) {
         LayoutInflater inflater = getLayoutInflater();
         View dialoglayout = inflater.inflate(R.layout.dialog_add_player, null);
@@ -139,17 +144,25 @@ public class PlayerActivity extends Activity implements PlayerAdapter.OnItemList
     }
 
     private void editLeague() {
-        mEdtName.setEnabled(true);
+        mEdtNameShow.setEnabled(true);
+        mEdtNationality.setEnabled(true);
+        mEdtYear.setEnabled(true);
         mToolBar.changeEditImage();
     }
 
     private void updateLeague() {
-        String newName = mEdtName.getText().toString();
+        String newName = mEdtNameShow.getText().toString();
+        String newNationality = mEdtNationality.getText().toString();
+        String newYear = mEdtYear.getText().toString();
         FootBallTeamItem footBallTeamItem = FootBallTeamItem.findById(FootBallTeamItem.class, getTeamId);
         footBallTeamItem.setName(newName);
+        footBallTeamItem.setNationality(newNationality);
+        footBallTeamItem.setYear(newYear);
         footBallTeamItem.save();
 
-        mEdtName.setEnabled(false);
+        mEdtNameShow.setEnabled(false);
+        mEdtNationality.setEnabled(false);
+        mEdtYear.setEnabled(false);
         mToolBar.changeEditImage();
     }
 
@@ -158,6 +171,7 @@ public class PlayerActivity extends Activity implements PlayerAdapter.OnItemList
         mSelect = position;
         PlayDetailActivity_.intent(PlayerActivity.this)
                 .extra(Utils.EXTRA_KEY_PLAYER_ID, mPlayers.get(position).getId().toString())
+                .extra(Utils.EXTRA_KEY_TEAM_ID, String.valueOf(getTeamId))
                 .start();
     }
 

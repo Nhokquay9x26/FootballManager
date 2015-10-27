@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,11 +18,11 @@
         android:orientation="vertical"
         android:padding="@dimen/image.league.margin.10dp">
 
-        <ImageView
-            android:id="@+id/imgLogo"
+        <vn.asiantech.internship.footballmanager.widgets.CircleImageView
+            android:id="@+id/circleImageView"
             android:layout_width="@dimen/circle_image.width.68dp"
             android:layout_height="@dimen/circle_image.height.68dp"
-            android:src="@drawable/ic_football" />
+            android:enabled="false"/>
 
         <EditText
             android:id="@+id/edtName"
@@ -32,7 +31,8 @@
             android:enabled="false"
             android:background="@null"
             android:textColor="@color/textview.splash.text.name"
-            android:textSize="@dimen/textview.league.size.18sp" />
+            android:textSize="@dimen/textview.league.size.18sp"
+            android:inputType="text" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

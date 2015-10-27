@@ -34,4 +34,12 @@ public class FootBallTeamItem extends SugarRecord {
         this.leagueId = leagueId;
         this.year = year;
     }
+
+    public static void deleteFootBallTeamByLeagueId(long id) {
+        PlayerItem.deleteFootBallTeamByTeamId(id);
+        FootBallTeamItem footBallTeam = FootBallTeamItem.findById(FootBallTeamItem.class, id);
+        if (footBallTeam != null) {
+            footBallTeam.delete();
+        }
+    }
 }
