@@ -5,14 +5,15 @@ import com.orm.dsl.Column;
 import com.orm.dsl.Table;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Created by nhokquay9x26 on 23/10/15.
  */
+@EqualsAndHashCode(callSuper = false)
 @Data
 @Table(name = "Player")
 public class PlayerItem extends SugarRecord {
@@ -30,6 +31,8 @@ public class PlayerItem extends SugarRecord {
     String birthday;
     @Column(name = "position")
     String position;
+    @Column(name = "logo")
+    String logo;
     @Column(name = "teamId")
     long teamId;
 
@@ -38,13 +41,14 @@ public class PlayerItem extends SugarRecord {
     }
 
     public String getAge() {
-        int day = 2015 - Integer.parseInt(getBirthday().toString().substring(0,4));
+        int day = 2015 - Integer.parseInt(getBirthday().toString().substring(0, 4));
         String age = String.valueOf(day);
         return age;
     }
 
-    public PlayerItem(String name, String number, String country, String weight, String height,
+    public PlayerItem(String logo, String name, String number, String country, String weight, String height,
                       String position, String birthday, long teamId) {
+        this.logo = logo;
         this.name = name;
         this.weight = weight;
         this.height = height;
@@ -69,6 +73,14 @@ public class PlayerItem extends SugarRecord {
                 PlayerItem.deletePlayerById(player.getId());
             }
         }
+    }
+
+    public static PlayerItem getTeamById(long id) {
+        return PlayerItem.findById(PlayerItem.class, id);
+    }
+
+    public static List<PlayerItem> getAllPlayerByTeamId(int getTeamId) {
+        return findWithQuery(PlayerItem.class, "Select * from Player where teamId = " + getTeamId);
     }
 
     public enum EnumPosition {

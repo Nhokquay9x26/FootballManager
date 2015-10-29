@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import vn.asiantech.internship.footballmanager.R;
+import vn.asiantech.internship.footballmanager.common.Utils;
 import vn.asiantech.internship.footballmanager.model.PlayerItem;
 import vn.asiantech.internship.footballmanager.widgets.CircleImageView;
 
@@ -46,6 +47,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
         holder.mTvNumber.setText(mPlayers.get(position).getNumber());
         holder.mTvPosition.setText(mPlayers.get(position).getPosition());
         holder.mTvCountry.setText(mPlayers.get(position).getCountry());
+        Utils.loadImage(mPlayers.get(position).getLogo(), holder.mCircleImageView);
     }
 
     @Override
@@ -72,6 +74,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
             mTvNumber = (TextView) itemView.findViewById(R.id.tvNumber);
             mTvPosition = (TextView) itemView.findViewById(R.id.tvPosition);
             mTvCountry = (TextView) itemView.findViewById(R.id.tvCountry);
+            mCircleImageView = (CircleImageView) itemView.findViewById(R.id.circleImageView);
             imgDelete = (ImageView) itemView.findViewById(R.id.imgDelete);
             imgDelete.setOnClickListener(this);
         }

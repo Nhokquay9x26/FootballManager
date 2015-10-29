@@ -1,12 +1,12 @@
 package vn.asiantech.internship.footballmanager.common;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Base64;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import android.net.Uri;
+import android.provider.MediaStore;
 
 import vn.asiantech.internship.footballmanager.widgets.CircleImageView;
 
@@ -18,31 +18,41 @@ public class Utils {
     public static final String EXTRA_KEY_TEAM_ID = "teamId";
     public static final String EXTRA_KEY_PLAYER_ID = "playerId";
     public static final int PICK_PHOTO_FOR_AVATAR = 1;
+    public static final int PICK_FROM_CAMERA = 2;
 
-    public static String convertBitmapToString(Bitmap bitmap) {
-        try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream.toByteArray();
-            return Base64.encodeToString(byteArray, Base64.DEFAULT);
-        } catch (Exception e) {
-            return null;
+    public static String getPicturePath(Uri uriImage, Context context) {
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+        if(uriImage != null) {
+            Cursor cursor = context.getContentResolver().query(uriImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String path = cursor.getString(columnIndex);
+            cursor.close();
+            return path;
+        }else {
+         return null;
         }
     }
 
-    public static Bitmap convertStringToBitmap(String encode) {
-        try {
-            InputStream inputStream = new ByteArrayInputStream(Base64.decode(encode.getBytes(), Base64.DEFAULT));
-            return BitmapFactory.decodeStream(inputStream);
-        } catch (Exception e) {
+    public static Bitmap getThumbnail(String mImgPath) {
+        BitmapFactory.Options bounds = new BitmapFactory.Options();
+        bounds.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mImgPath, bounds);
+        if ((bounds.outWidth == -1) || (bounds.outHeight == -1))
             return null;
-        }
+        int originalSize = (bounds.outHeight > bounds.outWidth) ?
+                bounds.outHeight
+                : bounds.outWidth;
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inSampleSize = originalSize / 500;
+        return BitmapFactory.decodeFile(mImgPath, opts);
     }
 
     public static void loadImage(String image, CircleImageView circleImageView) {
-        Bitmap bitmap = convertStringToBitmap(image);
-        if (bitmap != null) {
-            circleImageView.setImageBitmap(bitmap);
+        Bitmap mBitmap = getThumbnail(image);
+        if (mBitmap != null) {
+            circleImageView.setImageBitmap(mBitmap);
         }
     }
 }

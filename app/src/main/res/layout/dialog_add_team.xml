@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:gravity="center"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
     <vn.asiantech.internship.footballmanager.widgets.CircleImageView
@@ -16,18 +16,44 @@
         android:id="@+id/edtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/edittext.add_team.name"/>
+        android:hint="@string/edittext.add_team.name" />
+
+    <EditText
+        android:id="@+id/edtDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/edittext.add_team.description" />
 
     <EditText
         android:id="@+id/edtNationality"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/edittext.add_team.nationality"/>
+        android:hint="@string/edittext.add_team.nationality" />
 
     <EditText
         android:id="@+id/edtYear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/edittext.add_team.year"/>
+        android:hint="@string/edittext.add_team.year" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button.dialog.text.cancel" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button.dialog.text.add" />
+    </LinearLayout>
 </LinearLayout>

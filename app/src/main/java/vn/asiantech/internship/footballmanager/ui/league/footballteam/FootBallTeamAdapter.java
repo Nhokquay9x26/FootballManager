@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import vn.asiantech.internship.footballmanager.R;
+import vn.asiantech.internship.footballmanager.common.Utils;
 import vn.asiantech.internship.footballmanager.model.FootBallTeamItem;
 import vn.asiantech.internship.footballmanager.widgets.CircleImageView;
 
@@ -20,6 +21,7 @@ public class FootBallTeamAdapter extends RecyclerView.Adapter<FootBallTeamAdapte
 
     private List<FootBallTeamItem> mTeams;
     private OnItemListener mOnItemListener;
+    private boolean isShowDelete;
 
     public OnItemListener getmOnItemListener() {
         return mOnItemListener;
@@ -29,35 +31,42 @@ public class FootBallTeamAdapter extends RecyclerView.Adapter<FootBallTeamAdapte
         this.mOnItemListener = mOnItemListener;
     }
 
-    public FootBallTeamAdapter(List<FootBallTeamItem> mTeams) {
+    public FootBallTeamAdapter(List<FootBallTeamItem> mTeams, boolean isShowDelete) {
         this.mTeams = mTeams;
+        this.isShowDelete = isShowDelete;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_league, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_team, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(FootBallTeamAdapter.ViewHolder holder, int position) {
         holder.mTvName.setText(mTeams.get(position).getName());
-        holder.mCircleImageView.setImageResource(mTeams.get(position).getLogo());
+        holder.mTvDescription.setText(mTeams.get(position).getDescription());
+        Utils.loadImage(mTeams.get(position).getLogo(), holder.mCircleImageView);
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView mTvName;
+        TextView mTvDescription;
         CircleImageView mCircleImageView;
-        ImageView imgDelete;
+        ImageView mImgDelete;
 
         public ViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
-            imgDelete = (ImageView) view.findViewById(R.id.imgDelete);
-            imgDelete.setOnClickListener(this);
+            mImgDelete = (ImageView) view.findViewById(R.id.imgDelete);
+            mImgDelete.setOnClickListener(this);
             mTvName = (TextView) view.findViewById(R.id.tvName);
+            mTvDescription = (TextView) view.findViewById(R.id.tvDescription);
             mCircleImageView = (CircleImageView) view.findViewById(R.id.circleImageView);
+            if (!isShowDelete) {
+                mImgDelete.setVisibility(View.GONE);
+            }
         }
 
         @Override

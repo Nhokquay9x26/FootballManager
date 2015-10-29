@@ -29,5 +29,12 @@
     <string name="toast_add_data_suscess">Add data suscess</string>
     <string name="toast_name_empty_error">Name Empty</string>
     <string name="toast_image_empty_error">Image Empty</string>
+    <string name="dialog_tittle_add_team">Add Team</string>
+    <string name="dialog_tittle_add_player">Add Player</string>
+    <string name="edittext.add_team.description">Description</string>
+    <string name="toolbar_name_team">TEAM</string>
+    <string name="toolbar_name_player">PLAYER</string>
+    <string name="dialog_text_please_wait">Please wait...</string>
+    <string name="dialog_tittle_select_team">Select Team</string>
 
 </resources>

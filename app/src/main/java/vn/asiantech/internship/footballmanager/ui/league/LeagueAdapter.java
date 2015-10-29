@@ -30,7 +30,7 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.ViewHolder
         this.mOnItemListener = mOnItemListener;
     }
 
-    public LeagueAdapter(List<LeagueItem> mLeagues, boolean isImgDelete) {
+    public LeagueAdapter(List<LeagueItem> mLeagues) {
         this.mLeagues = mLeagues;
     }
 

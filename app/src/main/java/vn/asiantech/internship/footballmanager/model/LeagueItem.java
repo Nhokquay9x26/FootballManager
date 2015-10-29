@@ -7,10 +7,12 @@ import com.orm.dsl.Table;
 import java.util.List;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Created by nhokquay9x26 on 20/10/15.
  */
+@EqualsAndHashCode(callSuper = false)
 @Data
 @Table(name = "LEAGUES")
 public class LeagueItem extends SugarRecord {

@@ -25,7 +25,7 @@ public class AddDataDialog {
     }
 
     public interface OnAddDataListener {
-        void onAddData();
+        void onAddData(Dialog dialog);
     }
 
     public void isAdd(Context context, View layout, String mTitle) {
@@ -46,8 +46,7 @@ public class AddDataDialog {
             @Override
             public void onClick(View v) {
                 if (mOnAddDataListener != null) {
-                    mOnAddDataListener.onAddData();
-                    dialog.dismiss();
+                    mOnAddDataListener.onAddData(dialog);
                 }
             }
         });
