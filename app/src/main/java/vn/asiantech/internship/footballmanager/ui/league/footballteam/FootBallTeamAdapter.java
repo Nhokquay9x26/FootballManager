@@ -38,7 +38,8 @@ public class FootBallTeamAdapter extends RecyclerView.Adapter<FootBallTeamAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_team, parent, false);
+        View v;
+        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_team, parent, false);
         return new ViewHolder(v);
     }
 
@@ -46,7 +47,11 @@ public class FootBallTeamAdapter extends RecyclerView.Adapter<FootBallTeamAdapte
     public void onBindViewHolder(FootBallTeamAdapter.ViewHolder holder, int position) {
         holder.mTvName.setText(mTeams.get(position).getName());
         holder.mTvDescription.setText(mTeams.get(position).getDescription());
-        Utils.loadImage(mTeams.get(position).getLogo(), holder.mCircleImageView);
+        if (!mTeams.get(position).getLogo().equals("")) {
+            Utils.loadImage(mTeams.get(position).getLogo(), holder.mCircleImageView);
+        }else {
+            holder.mCircleImageView.setImageResource(R.drawable.ic_camera);
+        }
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

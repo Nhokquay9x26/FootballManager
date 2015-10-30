@@ -2,13 +2,10 @@ package vn.asiantech.internship.footballmanager.ui.league;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +14,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,7 +36,11 @@ import vn.asiantech.internship.footballmanager.common.Utils;
 import vn.asiantech.internship.footballmanager.dialog.AddDataDialog;
 import vn.asiantech.internship.footballmanager.dialog.ConfirmDialog;
 import vn.asiantech.internship.footballmanager.model.LeagueItem;
+import vn.asiantech.internship.footballmanager.model.PlayerItem;
 import vn.asiantech.internship.footballmanager.ui.league.footballteam.FootBallTeamActivity_;
+import vn.asiantech.internship.footballmanager.ui.league.player.PlayerActivity;
+import vn.asiantech.internship.footballmanager.ui.league.player.PlayerAdapter;
+import vn.asiantech.internship.footballmanager.ui.league.playerdetail.PlayDetailActivity_;
 import vn.asiantech.internship.footballmanager.widgets.CircleImageView;
 
 /**
@@ -48,7 +48,7 @@ import vn.asiantech.internship.footballmanager.widgets.CircleImageView;
  */
 @EActivity(R.layout.activity_league)
 public class LeagueActivity extends Activity implements LeagueAdapter.OnItemListener,
-        ConfirmDialog.OnConfirmDialogListener, AddDataDialog.OnAddDataListener, TextWatcher {
+        ConfirmDialog.OnConfirmDialogListener, AddDataDialog.OnAddDataListener, TextWatcher, PlayerAdapter.OnItemListener {
 
     @ViewById(R.id.recycleView)
     RecyclerView mRecyclerView;
@@ -69,7 +69,9 @@ public class LeagueActivity extends Activity implements LeagueAdapter.OnItemList
     private Uri mUri;
     private CircleImageView mCircleImageView;
     private List<LeagueItem> mLeagues;
+    private List<PlayerItem> mPlayer;
     private LeagueAdapter mAdapter;
+    private PlayerAdapter mAdapterPlayer;
     private ScaleInAnimationAdapter mScaleAdapter;
     private int mPositionSelect = -1;
 
@@ -220,6 +222,7 @@ public class LeagueActivity extends Activity implements LeagueAdapter.OnItemList
             mTvTitle.setVisibility(View.VISIBLE);
             mImgMenu.setVisibility(View.VISIBLE);
             mEdtSearch.setText("");
+            afterView();
             mImgBtnSearch.setImageResource(R.drawable.ic_search);
             isClickSearch = false;
         }
@@ -227,12 +230,19 @@ public class LeagueActivity extends Activity implements LeagueAdapter.OnItemList
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+        mPlayer = PlayerItem.getAllPlayerByName("");
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        Toast.makeText(this, mEdtSearch.getText().toString(), Toast.LENGTH_SHORT).show();
+        String search = mEdtSearch.getText().toString();
+        mPlayer = PlayerItem.getAllPlayerByName(search);
+        mAdapterPlayer = new PlayerAdapter(mPlayer);
+        mAdapterPlayer.setmOnItemListener(this, false);
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.setAdapter(mAdapterPlayer);
     }
 
     @Override
@@ -241,4 +251,16 @@ public class LeagueActivity extends Activity implements LeagueAdapter.OnItemList
     }
 
 
+    @Override
+    public void onPlayerItemClick(int position) {
+        PlayDetailActivity_.intent(LeagueActivity.this)
+                .extra(Utils.EXTRA_KEY_PLAYER_ID, mPlayer.get(position).getId().toString())
+                .extra(Utils.EXTRA_KEY_TEAM_ID, String.valueOf(mPlayer.get(position).getTeamId()))
+                .start();
+    }
+
+    @Override
+    public void onPlayerDeleteItemClick(int position) {
+
+    }
 }

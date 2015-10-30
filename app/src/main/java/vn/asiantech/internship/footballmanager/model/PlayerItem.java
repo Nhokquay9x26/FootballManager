@@ -3,6 +3,8 @@ package vn.asiantech.internship.footballmanager.model;
 import com.orm.SugarRecord;
 import com.orm.dsl.Column;
 import com.orm.dsl.Table;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import java.util.Arrays;
 import java.util.List;
@@ -82,6 +84,14 @@ public class PlayerItem extends SugarRecord {
     public static List<PlayerItem> getAllPlayerByTeamId(int getTeamId) {
         return findWithQuery(PlayerItem.class, "Select * from Player where teamId = " + getTeamId);
     }
+
+    public static List<PlayerItem> getAllPlayerByName(String name) {
+        if (name != null && name.length() > 0) {
+            return Select.from(PlayerItem.class).where(Condition.prop("name").like(name + "%")).list();
+        }
+        return null;
+    }
+
 
     public enum EnumPosition {
         CF,

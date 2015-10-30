@@ -13,6 +13,7 @@ import java.util.List;
 import vn.asiantech.internship.footballmanager.R;
 import vn.asiantech.internship.footballmanager.common.Utils;
 import vn.asiantech.internship.footballmanager.model.PlayerItem;
+import vn.asiantech.internship.footballmanager.ui.league.LeagueActivity;
 import vn.asiantech.internship.footballmanager.widgets.CircleImageView;
 
 /**
@@ -22,13 +23,15 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
 
     List<PlayerItem> mPlayers;
     private OnItemListener mOnItemListener;
+    private boolean isShowDelete;
 
     public OnItemListener getmOnItemListener() {
         return mOnItemListener;
     }
 
-    public void setmOnItemListener(OnItemListener mOnItemListener) {
+    public void setmOnItemListener(OnItemListener mOnItemListener, boolean isShowDelete) {
         this.mOnItemListener = mOnItemListener;
+        this.isShowDelete = isShowDelete;
     }
 
     public PlayerAdapter(List<PlayerItem> mPlayers) {
@@ -47,7 +50,11 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
         holder.mTvNumber.setText(mPlayers.get(position).getNumber());
         holder.mTvPosition.setText(mPlayers.get(position).getPosition());
         holder.mTvCountry.setText(mPlayers.get(position).getCountry());
-        Utils.loadImage(mPlayers.get(position).getLogo(), holder.mCircleImageView);
+        if (!mPlayers.get(position).getLogo().equals("")){
+            Utils.loadImage(mPlayers.get(position).getLogo(), holder.mCircleImageView);
+        } else {
+            holder.mCircleImageView.setImageResource(R.drawable.ic_camera);
+        }
     }
 
     @Override
@@ -58,6 +65,8 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
             return 0;
         }
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CircleImageView mCircleImageView;
@@ -77,21 +86,24 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
             mCircleImageView = (CircleImageView) itemView.findViewById(R.id.circleImageView);
             imgDelete = (ImageView) itemView.findViewById(R.id.imgDelete);
             imgDelete.setOnClickListener(this);
+            if(!isShowDelete){
+                imgDelete.setVisibility(View.GONE);
+            }
         }
 
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.imgDelete) {
-                mOnItemListener.onDeleteItemClick(getAdapterPosition());
+                mOnItemListener.onPlayerDeleteItemClick(getAdapterPosition());
             } else if (mOnItemListener != null) {
-                mOnItemListener.onItemClick(getAdapterPosition());
+                mOnItemListener.onPlayerItemClick(getAdapterPosition());
             }
         }
     }
 
     public interface OnItemListener {
-        void onItemClick(int position);
+        void onPlayerItemClick(int position);
 
-        void onDeleteItemClick(int position);
+        void onPlayerDeleteItemClick(int position);
     }
 }

@@ -43,8 +43,11 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.ViewHolder
     @Override
     public void onBindViewHolder(LeagueAdapter.ViewHolder holder, int position) {
         holder.mTvName.setText(mLeagues.get(position).getName());
-        Utils.loadImage(mLeagues.get(position).getLogo(), holder.mCircleImageViewLogo);
-
+        if (!mLeagues.get(position).getLogo().equals("")) {
+            Utils.loadImage(mLeagues.get(position).getLogo(), holder.mCircleImageViewLogo);
+        } else {
+            holder.mCircleImageViewLogo.setImageResource(R.drawable.ic_camera);
+        }
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

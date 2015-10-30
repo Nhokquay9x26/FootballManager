@@ -103,7 +103,7 @@ public class PlayerActivity extends Activity implements PlayerAdapter.OnItemList
 
         mPlayers = PlayerItem.getAllPlayerByTeamId(getTeamId);
         mAdapter = new PlayerAdapter(mPlayers);
-        mAdapter.setmOnItemListener(this);
+        mAdapter.setmOnItemListener(this, true);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -259,24 +259,6 @@ public class PlayerActivity extends Activity implements PlayerAdapter.OnItemList
     }
 
     @Override
-    public void onItemClick(int position) {
-        mPositionSelect = position;
-        PlayDetailActivity_.intent(PlayerActivity.this)
-                .extra(Utils.EXTRA_KEY_PLAYER_ID, mPlayers.get(position).getId().toString())
-                .extra(Utils.EXTRA_KEY_TEAM_ID, String.valueOf(getTeamId))
-                .start();
-    }
-
-    @Override
-    public void onDeleteItemClick(int position) {
-        String mTitle = getString(R.string.dialog_delete_tittle);
-        String mMessage = getString(R.string.dialog_delete_message);
-        ConfirmDialog dialog = new ConfirmDialog();
-        dialog.isConfirm(this, mTitle, mMessage, position);
-        dialog.setmOnConfirmDialogListener(this);
-    }
-
-    @Override
     public void onDialogConfirm(int position) {
         if (position == -1) {
             finish();
@@ -285,5 +267,23 @@ public class PlayerActivity extends Activity implements PlayerAdapter.OnItemList
             mPlayers.remove(position);
             mScaleAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onPlayerItemClick(int position) {
+        mPositionSelect = position;
+        PlayDetailActivity_.intent(PlayerActivity.this)
+                .extra(Utils.EXTRA_KEY_PLAYER_ID, mPlayers.get(position).getId().toString())
+                .extra(Utils.EXTRA_KEY_TEAM_ID, String.valueOf(getTeamId))
+                .start();
+    }
+
+    @Override
+    public void onPlayerDeleteItemClick(int position) {
+        String mTitle = getString(R.string.dialog_delete_tittle);
+        String mMessage = getString(R.string.dialog_delete_message);
+        ConfirmDialog dialog = new ConfirmDialog();
+        dialog.isConfirm(this, mTitle, mMessage, position);
+        dialog.setmOnConfirmDialogListener(this);
     }
 }

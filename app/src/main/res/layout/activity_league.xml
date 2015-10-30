@@ -37,24 +37,24 @@
 
         <EditText
             android:id="@+id/edtSearch"
-            android:layout_toRightOf="@+id/imgBack"
             android:layout_width="match_parent"
-            android:visibility="invisible"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_toLeftOf="@+id/imgMenu"
+            android:layout_toRightOf="@+id/imgBack"
             android:background="@null"
+            android:gravity="center"
             android:hint="@string/textview.leage.text.search"
             android:textColor="@color/textview.splash.text.name"
-            android:textSize="@dimen/textview.splash.size.18sp" />
+            android:textSize="@dimen/textview.splash.size.18sp"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/imgSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/imgMenu"
             android:layout_gravity="center"
             android:layout_margin="@dimen/image.league.margin.10dp"
+            android:layout_toLeftOf="@+id/imgMenu"
             android:src="@drawable/ic_search" />
 
     </RelativeLayout>
